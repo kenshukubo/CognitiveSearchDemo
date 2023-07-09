@@ -1,15 +1,18 @@
 ﻿using CognitiveSearchDemo.Model;
 using Azure;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System;
-using Azure.Core.Serialization;
+using Microsoft.Extensions.Configuration;
 
-string AZURE_COGNITIVE_SEARCH_KEY = "9dPsjVwi6TuEFjw1bZ19O4cDpKzIZi5SkwujGZWm9bAzSeD6CW4z";
-string AZURE_COGNITIVE_SEARCH_NAME = "cogsearch-searchdocs-dev-001";
-string AZURE_COGNITIVE_SEARCH_INDEX = "azureblob-index";
+var configuration = new ConfigurationBuilder()
+.AddJsonFile("appsettings.json")
+.Build();
+
+IConfigurationSection section = configuration.GetSection("CognitiveSearch");
+
+string AZURE_COGNITIVE_SEARCH_KEY = section["AZURE_COGNITIVE_SEARCH_KEY"];
+string AZURE_COGNITIVE_SEARCH_NAME = section["AZURE_COGNITIVE_SEARCH_NAME"];
+string AZURE_COGNITIVE_SEARCH_INDEX = section["AZURE_COGNITIVE_SEARCH_INDEX"];
 
 string searchServiceEndPoint = $"https://{AZURE_COGNITIVE_SEARCH_NAME}.search.windows.net";
 string queryApiKey = AZURE_COGNITIVE_SEARCH_KEY;
